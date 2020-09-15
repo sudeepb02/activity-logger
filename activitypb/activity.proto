@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package activity;
+
+option go_package="activitypb";
+
+message activity {
+	string type = 1;
+	string timestamp = 2;
+	string duration = 3;
+	string label = 4;
+}
+
+message user {
+	string name = 1;
+	string email = 2;
+	string phone = 3;
+}
+
+service ActivityService {};
