@@ -4,17 +4,27 @@ package activity;
 
 option go_package="activitypb";
 
-message activity {
+message Activity {
 	string type = 1;
 	string timestamp = 2;
 	string duration = 3;
 	string label = 4;
 }
 
-message user {
+message User {
 	string name = 1;
 	string email = 2;
 	string phone = 3;
 }
 
-service ActivityService {};
+message PlayRequest {
+	Activity activity = 1;
+}
+
+message PlayResponse {
+	string result = 1;
+}
+
+service ActivityService {
+	rpc Play(PlayRequest) returns (PlayResponse) {};
+};
