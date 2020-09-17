@@ -163,7 +163,7 @@ func (x *User) GetPhone() string {
 	return ""
 }
 
-type PlayRequest struct {
+type LogActivityRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -171,8 +171,8 @@ type PlayRequest struct {
 	Activity *Activity `protobuf:"bytes,1,opt,name=activity,proto3" json:"activity,omitempty"`
 }
 
-func (x *PlayRequest) Reset() {
-	*x = PlayRequest{}
+func (x *LogActivityRequest) Reset() {
+	*x = LogActivityRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_activitypb_activity_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -180,13 +180,13 @@ func (x *PlayRequest) Reset() {
 	}
 }
 
-func (x *PlayRequest) String() string {
+func (x *LogActivityRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PlayRequest) ProtoMessage() {}
+func (*LogActivityRequest) ProtoMessage() {}
 
-func (x *PlayRequest) ProtoReflect() protoreflect.Message {
+func (x *LogActivityRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_activitypb_activity_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -198,19 +198,19 @@ func (x *PlayRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PlayRequest.ProtoReflect.Descriptor instead.
-func (*PlayRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use LogActivityRequest.ProtoReflect.Descriptor instead.
+func (*LogActivityRequest) Descriptor() ([]byte, []int) {
 	return file_activitypb_activity_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *PlayRequest) GetActivity() *Activity {
+func (x *LogActivityRequest) GetActivity() *Activity {
 	if x != nil {
 		return x.Activity
 	}
 	return nil
 }
 
-type PlayResponse struct {
+type LogActivityResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -218,8 +218,8 @@ type PlayResponse struct {
 	Result string `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
 }
 
-func (x *PlayResponse) Reset() {
-	*x = PlayResponse{}
+func (x *LogActivityResponse) Reset() {
+	*x = LogActivityResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_activitypb_activity_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -227,13 +227,13 @@ func (x *PlayResponse) Reset() {
 	}
 }
 
-func (x *PlayResponse) String() string {
+func (x *LogActivityResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PlayResponse) ProtoMessage() {}
+func (*LogActivityResponse) ProtoMessage() {}
 
-func (x *PlayResponse) ProtoReflect() protoreflect.Message {
+func (x *LogActivityResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_activitypb_activity_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -245,12 +245,12 @@ func (x *PlayResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PlayResponse.ProtoReflect.Descriptor instead.
-func (*PlayResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use LogActivityResponse.ProtoReflect.Descriptor instead.
+func (*LogActivityResponse) Descriptor() ([]byte, []int) {
 	return file_activitypb_activity_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *PlayResponse) GetResult() string {
+func (x *LogActivityResponse) GetResult() string {
 	if x != nil {
 		return x.Result
 	}
@@ -273,20 +273,22 @@ var file_activitypb_activity_proto_rawDesc = []byte{
 	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d,
 	0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x68, 0x6f, 0x6e, 0x65,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x68, 0x6f, 0x6e, 0x65, 0x22, 0x3d, 0x0a,
-	0x0b, 0x50, 0x6c, 0x61, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2e, 0x0a, 0x08,
-	0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12,
-	0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x2e, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69,
-	0x74, 0x79, 0x52, 0x08, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x22, 0x26, 0x0a, 0x0c,
-	0x50, 0x6c, 0x61, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06,
-	0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65,
-	0x73, 0x75, 0x6c, 0x74, 0x32, 0x4a, 0x0a, 0x0f, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79,
-	0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x37, 0x0a, 0x04, 0x50, 0x6c, 0x61, 0x79, 0x12,
-	0x15, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x2e, 0x50, 0x6c, 0x61, 0x79, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74,
-	0x79, 0x2e, 0x50, 0x6c, 0x61, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
-	0x42, 0x0c, 0x5a, 0x0a, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x70, 0x62, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x68, 0x6f, 0x6e, 0x65, 0x22, 0x44, 0x0a,
+	0x12, 0x4c, 0x6f, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x2e, 0x0a, 0x08, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79,
+	0x2e, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x52, 0x08, 0x61, 0x63, 0x74, 0x69, 0x76,
+	0x69, 0x74, 0x79, 0x22, 0x2d, 0x0a, 0x13, 0x4c, 0x6f, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69,
+	0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65,
+	0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x32, 0x5f, 0x0a, 0x0f, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x53, 0x65,
+	0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x4c, 0x0a, 0x0b, 0x4c, 0x6f, 0x67, 0x41, 0x63, 0x74, 0x69,
+	0x76, 0x69, 0x74, 0x79, 0x12, 0x1c, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x2e,
+	0x4c, 0x6f, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x2e, 0x4c, 0x6f,
+	0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x00, 0x42, 0x0c, 0x5a, 0x0a, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x70,
+	0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -303,15 +305,15 @@ func file_activitypb_activity_proto_rawDescGZIP() []byte {
 
 var file_activitypb_activity_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_activitypb_activity_proto_goTypes = []interface{}{
-	(*Activity)(nil),     // 0: activity.Activity
-	(*User)(nil),         // 1: activity.User
-	(*PlayRequest)(nil),  // 2: activity.PlayRequest
-	(*PlayResponse)(nil), // 3: activity.PlayResponse
+	(*Activity)(nil),            // 0: activity.Activity
+	(*User)(nil),                // 1: activity.User
+	(*LogActivityRequest)(nil),  // 2: activity.LogActivityRequest
+	(*LogActivityResponse)(nil), // 3: activity.LogActivityResponse
 }
 var file_activitypb_activity_proto_depIdxs = []int32{
-	0, // 0: activity.PlayRequest.activity:type_name -> activity.Activity
-	2, // 1: activity.ActivityService.Play:input_type -> activity.PlayRequest
-	3, // 2: activity.ActivityService.Play:output_type -> activity.PlayResponse
+	0, // 0: activity.LogActivityRequest.activity:type_name -> activity.Activity
+	2, // 1: activity.ActivityService.LogActivity:input_type -> activity.LogActivityRequest
+	3, // 2: activity.ActivityService.LogActivity:output_type -> activity.LogActivityResponse
 	2, // [2:3] is the sub-list for method output_type
 	1, // [1:2] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -350,7 +352,7 @@ func file_activitypb_activity_proto_init() {
 			}
 		}
 		file_activitypb_activity_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PlayRequest); i {
+			switch v := v.(*LogActivityRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -362,7 +364,7 @@ func file_activitypb_activity_proto_init() {
 			}
 		}
 		file_activitypb_activity_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PlayResponse); i {
+			switch v := v.(*LogActivityResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -406,7 +408,7 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ActivityServiceClient interface {
-	Play(ctx context.Context, in *PlayRequest, opts ...grpc.CallOption) (*PlayResponse, error)
+	LogActivity(ctx context.Context, in *LogActivityRequest, opts ...grpc.CallOption) (*LogActivityResponse, error)
 }
 
 type activityServiceClient struct {
@@ -417,9 +419,9 @@ func NewActivityServiceClient(cc grpc.ClientConnInterface) ActivityServiceClient
 	return &activityServiceClient{cc}
 }
 
-func (c *activityServiceClient) Play(ctx context.Context, in *PlayRequest, opts ...grpc.CallOption) (*PlayResponse, error) {
-	out := new(PlayResponse)
-	err := c.cc.Invoke(ctx, "/activity.ActivityService/Play", in, out, opts...)
+func (c *activityServiceClient) LogActivity(ctx context.Context, in *LogActivityRequest, opts ...grpc.CallOption) (*LogActivityResponse, error) {
+	out := new(LogActivityResponse)
+	err := c.cc.Invoke(ctx, "/activity.ActivityService/LogActivity", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -428,35 +430,35 @@ func (c *activityServiceClient) Play(ctx context.Context, in *PlayRequest, opts 
 
 // ActivityServiceServer is the server API for ActivityService service.
 type ActivityServiceServer interface {
-	Play(context.Context, *PlayRequest) (*PlayResponse, error)
+	LogActivity(context.Context, *LogActivityRequest) (*LogActivityResponse, error)
 }
 
 // UnimplementedActivityServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedActivityServiceServer struct {
 }
 
-func (*UnimplementedActivityServiceServer) Play(context.Context, *PlayRequest) (*PlayResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Play not implemented")
+func (*UnimplementedActivityServiceServer) LogActivity(context.Context, *LogActivityRequest) (*LogActivityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LogActivity not implemented")
 }
 
 func RegisterActivityServiceServer(s *grpc.Server, srv ActivityServiceServer) {
 	s.RegisterService(&_ActivityService_serviceDesc, srv)
 }
 
-func _ActivityService_Play_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PlayRequest)
+func _ActivityService_LogActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LogActivityRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ActivityServiceServer).Play(ctx, in)
+		return srv.(ActivityServiceServer).LogActivity(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/activity.ActivityService/Play",
+		FullMethod: "/activity.ActivityService/LogActivity",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ActivityServiceServer).Play(ctx, req.(*PlayRequest))
+		return srv.(ActivityServiceServer).LogActivity(ctx, req.(*LogActivityRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -466,8 +468,8 @@ var _ActivityService_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*ActivityServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Play",
-			Handler:    _ActivityService_Play_Handler,
+			MethodName: "LogActivity",
+			Handler:    _ActivityService_LogActivity_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

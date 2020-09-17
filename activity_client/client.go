@@ -21,22 +21,25 @@ func main() {
 
 	fmt.Printf("Client connection ready %v", cli)
 
-	logPlayTime(cli)
+	//Create a user menu to get input from user and pass the inputs to logUserActivity
+	// logPlayTime(cli)
 }
 
-func logPlayTime(cli activitypb.ActivityServiceClient) {
+// func logUserActivity(string type, string timestamp, string duration, string label)
+
+func logUserActivity(cli activitypb.ActivityServiceClient, activityType string, activityTimestamp string, duration string, label string) {
 
 	fmt.Println("Logging activity for PlayTime")
-	req := &activitypb.PlayRequest{
+	req := &activitypb.LogActivityRequest{
 		Activity: &activitypb.Activity{
-			Type: "PlayTime",
-			Timestamp: "Test",
-			Duration: "1",
-			Label: "TestPlay",
+			Type: activityType,
+			Timestamp: activityTimestamp,
+			Duration: duration,
+			Label: label,
 		},
 	}
 
-	res, err := cli.Play(context.Background(), req)
+	res, err := cli.LogActivity(context.Background(), req)
 	if err != nil {
 		log.Fatalf("Failed to log activity %v", err)
 	}

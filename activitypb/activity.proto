@@ -17,14 +17,14 @@ message User {
 	string phone = 3;
 }
 
-message PlayRequest {
+message LogActivityRequest {
 	Activity activity = 1;
 }
 
-message PlayResponse {
+message LogActivityResponse {
 	string result = 1;
 }
 
 service ActivityService {
-	rpc Play(PlayRequest) returns (PlayResponse) {};
+	rpc LogActivity(LogActivityRequest) returns (LogActivityResponse) {};
 };

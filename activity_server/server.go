@@ -13,13 +13,13 @@ type server struct {
 
 }
 
-func (*server) Play(ctx context.Context, req *activitypb.PlayRequest) (*activitypb.PlayResponse, error) {
-	fmt.Printf("Received request to log Play activity %v", req)
+func (*server) LogActivity(ctx context.Context, req *activitypb.LogActivityRequest) (*activitypb.LogActivityResponse, error) {
+	fmt.Printf("Received request to log activity %v", req)
 	activity := req.GetActivity()
 	duration := activity.GetDuration()
 	label := activity.GetLabel()
 
-	res := &activitypb.PlayResponse{
+	res := &activitypb.LogActivityResponse{
 		Result: "Logged activity " + label + " for duration of " + duration,
 	}
 	return res, nil
