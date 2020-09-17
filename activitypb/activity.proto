@@ -25,6 +25,24 @@ message LogActivityResponse {
 	string result = 1;
 }
 
+message IsDoneRequest {
+	Activity activity = 1;
+}
+
+message IsDoneResponse {
+	bool status = 1;
+}
+
+message IsValidRequest {
+	Activity activity = 1;
+}
+
+message IsValidResponse {
+	bool result = 1;
+}
+
 service ActivityService {
 	rpc LogActivity(LogActivityRequest) returns (LogActivityResponse) {};
+	rpc IsDone(IsDoneRequest) returns (IsDoneResponse) {};
+	rpc IsValid(IsValidRequest) returns (IsValidResponse) {};
 };

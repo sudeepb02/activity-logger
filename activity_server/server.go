@@ -25,6 +25,31 @@ func (*server) LogActivity(ctx context.Context, req *activitypb.LogActivityReque
 	return res, nil
 }
 
+func (*server) IsDone(ctx context.Context, req *activitypb.IsDoneRequest) (*activitypb.IsDoneResponse, error) {
+	fmt.Printf("Request received at server to check if activity is completed %v", req)
+	// activityDetails := req.GetActivity()
+	//Add logic to check if activity is complete, needs to convert types
+
+	res := &activitypb.IsDoneResponse {
+		Status: true,
+	}
+
+	return res, nil
+}
+	
+
+func (*server) IsValid(ctx context.Context, req *activitypb.IsValidRequest) (*activitypb.IsValidResponse, error) {
+	
+	fmt.Printf("Request received at server to check if activity is completed %v", req)
+	// activityDetails := req.GetActivity()
+	//Add logic to check if activity is complete, needs to convert types
+
+	res := &activitypb.IsValidResponse {
+		Result: true,
+	}
+
+	return res, nil
+}
 
 func main() {
 

@@ -257,6 +257,194 @@ func (x *LogActivityResponse) GetResult() string {
 	return ""
 }
 
+type IsDoneRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Activity *Activity `protobuf:"bytes,1,opt,name=activity,proto3" json:"activity,omitempty"`
+}
+
+func (x *IsDoneRequest) Reset() {
+	*x = IsDoneRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_activitypb_activity_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *IsDoneRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IsDoneRequest) ProtoMessage() {}
+
+func (x *IsDoneRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_activitypb_activity_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IsDoneRequest.ProtoReflect.Descriptor instead.
+func (*IsDoneRequest) Descriptor() ([]byte, []int) {
+	return file_activitypb_activity_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *IsDoneRequest) GetActivity() *Activity {
+	if x != nil {
+		return x.Activity
+	}
+	return nil
+}
+
+type IsDoneResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Status bool `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+}
+
+func (x *IsDoneResponse) Reset() {
+	*x = IsDoneResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_activitypb_activity_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *IsDoneResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IsDoneResponse) ProtoMessage() {}
+
+func (x *IsDoneResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_activitypb_activity_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IsDoneResponse.ProtoReflect.Descriptor instead.
+func (*IsDoneResponse) Descriptor() ([]byte, []int) {
+	return file_activitypb_activity_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *IsDoneResponse) GetStatus() bool {
+	if x != nil {
+		return x.Status
+	}
+	return false
+}
+
+type IsValidRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Activity *Activity `protobuf:"bytes,1,opt,name=activity,proto3" json:"activity,omitempty"`
+}
+
+func (x *IsValidRequest) Reset() {
+	*x = IsValidRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_activitypb_activity_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *IsValidRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IsValidRequest) ProtoMessage() {}
+
+func (x *IsValidRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_activitypb_activity_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IsValidRequest.ProtoReflect.Descriptor instead.
+func (*IsValidRequest) Descriptor() ([]byte, []int) {
+	return file_activitypb_activity_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *IsValidRequest) GetActivity() *Activity {
+	if x != nil {
+		return x.Activity
+	}
+	return nil
+}
+
+type IsValidResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result bool `protobuf:"varint,1,opt,name=result,proto3" json:"result,omitempty"`
+}
+
+func (x *IsValidResponse) Reset() {
+	*x = IsValidResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_activitypb_activity_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *IsValidResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IsValidResponse) ProtoMessage() {}
+
+func (x *IsValidResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_activitypb_activity_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IsValidResponse.ProtoReflect.Descriptor instead.
+func (*IsValidResponse) Descriptor() ([]byte, []int) {
+	return file_activitypb_activity_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *IsValidResponse) GetResult() bool {
+	if x != nil {
+		return x.Result
+	}
+	return false
+}
+
 var File_activitypb_activity_proto protoreflect.FileDescriptor
 
 var file_activitypb_activity_proto_rawDesc = []byte{
@@ -281,14 +469,36 @@ var file_activitypb_activity_proto_rawDesc = []byte{
 	0x69, 0x74, 0x79, 0x22, 0x2d, 0x0a, 0x13, 0x4c, 0x6f, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69,
 	0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65,
 	0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75,
-	0x6c, 0x74, 0x32, 0x5f, 0x0a, 0x0f, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x53, 0x65,
-	0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x4c, 0x0a, 0x0b, 0x4c, 0x6f, 0x67, 0x41, 0x63, 0x74, 0x69,
-	0x76, 0x69, 0x74, 0x79, 0x12, 0x1c, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x2e,
-	0x4c, 0x6f, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x2e, 0x4c, 0x6f,
-	0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x22, 0x00, 0x42, 0x0c, 0x5a, 0x0a, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x70,
-	0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6c, 0x74, 0x22, 0x3f, 0x0a, 0x0d, 0x49, 0x73, 0x44, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x2e, 0x0a, 0x08, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79,
+	0x2e, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x52, 0x08, 0x61, 0x63, 0x74, 0x69, 0x76,
+	0x69, 0x74, 0x79, 0x22, 0x28, 0x0a, 0x0e, 0x49, 0x73, 0x44, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x40, 0x0a,
+	0x0e, 0x49, 0x73, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x2e, 0x0a, 0x08, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x12, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x2e, 0x41, 0x63, 0x74,
+	0x69, 0x76, 0x69, 0x74, 0x79, 0x52, 0x08, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x22,
+	0x29, 0x0a, 0x0f, 0x49, 0x73, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x08, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x32, 0xe0, 0x01, 0x0a, 0x0f, 0x41,
+	0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x4c,
+	0x0a, 0x0b, 0x4c, 0x6f, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x12, 0x1c, 0x2e,
+	0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x2e, 0x4c, 0x6f, 0x67, 0x41, 0x63, 0x74, 0x69,
+	0x76, 0x69, 0x74, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x61, 0x63,
+	0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x2e, 0x4c, 0x6f, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69,
+	0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x3d, 0x0a, 0x06,
+	0x49, 0x73, 0x44, 0x6f, 0x6e, 0x65, 0x12, 0x17, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74,
+	0x79, 0x2e, 0x49, 0x73, 0x44, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x18, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x2e, 0x49, 0x73, 0x44, 0x6f, 0x6e,
+	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x40, 0x0a, 0x07, 0x49,
+	0x73, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x12, 0x18, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74,
+	0x79, 0x2e, 0x49, 0x73, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x19, 0x2e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x2e, 0x49, 0x73, 0x56, 0x61,
+	0x6c, 0x69, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x0c, 0x5a,
+	0x0a, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -303,22 +513,32 @@ func file_activitypb_activity_proto_rawDescGZIP() []byte {
 	return file_activitypb_activity_proto_rawDescData
 }
 
-var file_activitypb_activity_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_activitypb_activity_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_activitypb_activity_proto_goTypes = []interface{}{
 	(*Activity)(nil),            // 0: activity.Activity
 	(*User)(nil),                // 1: activity.User
 	(*LogActivityRequest)(nil),  // 2: activity.LogActivityRequest
 	(*LogActivityResponse)(nil), // 3: activity.LogActivityResponse
+	(*IsDoneRequest)(nil),       // 4: activity.IsDoneRequest
+	(*IsDoneResponse)(nil),      // 5: activity.IsDoneResponse
+	(*IsValidRequest)(nil),      // 6: activity.IsValidRequest
+	(*IsValidResponse)(nil),     // 7: activity.IsValidResponse
 }
 var file_activitypb_activity_proto_depIdxs = []int32{
 	0, // 0: activity.LogActivityRequest.activity:type_name -> activity.Activity
-	2, // 1: activity.ActivityService.LogActivity:input_type -> activity.LogActivityRequest
-	3, // 2: activity.ActivityService.LogActivity:output_type -> activity.LogActivityResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // 1: activity.IsDoneRequest.activity:type_name -> activity.Activity
+	0, // 2: activity.IsValidRequest.activity:type_name -> activity.Activity
+	2, // 3: activity.ActivityService.LogActivity:input_type -> activity.LogActivityRequest
+	4, // 4: activity.ActivityService.IsDone:input_type -> activity.IsDoneRequest
+	6, // 5: activity.ActivityService.IsValid:input_type -> activity.IsValidRequest
+	3, // 6: activity.ActivityService.LogActivity:output_type -> activity.LogActivityResponse
+	5, // 7: activity.ActivityService.IsDone:output_type -> activity.IsDoneResponse
+	7, // 8: activity.ActivityService.IsValid:output_type -> activity.IsValidResponse
+	6, // [6:9] is the sub-list for method output_type
+	3, // [3:6] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_activitypb_activity_proto_init() }
@@ -375,6 +595,54 @@ func file_activitypb_activity_proto_init() {
 				return nil
 			}
 		}
+		file_activitypb_activity_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*IsDoneRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_activitypb_activity_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*IsDoneResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_activitypb_activity_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*IsValidRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_activitypb_activity_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*IsValidResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -382,7 +650,7 @@ func file_activitypb_activity_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_activitypb_activity_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -409,6 +677,8 @@ const _ = grpc.SupportPackageIsVersion6
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ActivityServiceClient interface {
 	LogActivity(ctx context.Context, in *LogActivityRequest, opts ...grpc.CallOption) (*LogActivityResponse, error)
+	IsDone(ctx context.Context, in *IsDoneRequest, opts ...grpc.CallOption) (*IsDoneResponse, error)
+	IsValid(ctx context.Context, in *IsValidRequest, opts ...grpc.CallOption) (*IsValidResponse, error)
 }
 
 type activityServiceClient struct {
@@ -428,9 +698,29 @@ func (c *activityServiceClient) LogActivity(ctx context.Context, in *LogActivity
 	return out, nil
 }
 
+func (c *activityServiceClient) IsDone(ctx context.Context, in *IsDoneRequest, opts ...grpc.CallOption) (*IsDoneResponse, error) {
+	out := new(IsDoneResponse)
+	err := c.cc.Invoke(ctx, "/activity.ActivityService/IsDone", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *activityServiceClient) IsValid(ctx context.Context, in *IsValidRequest, opts ...grpc.CallOption) (*IsValidResponse, error) {
+	out := new(IsValidResponse)
+	err := c.cc.Invoke(ctx, "/activity.ActivityService/IsValid", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ActivityServiceServer is the server API for ActivityService service.
 type ActivityServiceServer interface {
 	LogActivity(context.Context, *LogActivityRequest) (*LogActivityResponse, error)
+	IsDone(context.Context, *IsDoneRequest) (*IsDoneResponse, error)
+	IsValid(context.Context, *IsValidRequest) (*IsValidResponse, error)
 }
 
 // UnimplementedActivityServiceServer can be embedded to have forward compatible implementations.
@@ -439,6 +729,12 @@ type UnimplementedActivityServiceServer struct {
 
 func (*UnimplementedActivityServiceServer) LogActivity(context.Context, *LogActivityRequest) (*LogActivityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LogActivity not implemented")
+}
+func (*UnimplementedActivityServiceServer) IsDone(context.Context, *IsDoneRequest) (*IsDoneResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsDone not implemented")
+}
+func (*UnimplementedActivityServiceServer) IsValid(context.Context, *IsValidRequest) (*IsValidResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsValid not implemented")
 }
 
 func RegisterActivityServiceServer(s *grpc.Server, srv ActivityServiceServer) {
@@ -463,6 +759,42 @@ func _ActivityService_LogActivity_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ActivityService_IsDone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsDoneRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ActivityServiceServer).IsDone(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/activity.ActivityService/IsDone",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ActivityServiceServer).IsDone(ctx, req.(*IsDoneRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ActivityService_IsValid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsValidRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ActivityServiceServer).IsValid(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/activity.ActivityService/IsValid",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ActivityServiceServer).IsValid(ctx, req.(*IsValidRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ActivityService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "activity.ActivityService",
 	HandlerType: (*ActivityServiceServer)(nil),
@@ -470,6 +802,14 @@ var _ActivityService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LogActivity",
 			Handler:    _ActivityService_LogActivity_Handler,
+		},
+		{
+			MethodName: "IsDone",
+			Handler:    _ActivityService_IsDone_Handler,
+		},
+		{
+			MethodName: "IsValid",
+			Handler:    _ActivityService_IsValid_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
