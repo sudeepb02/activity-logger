@@ -12,9 +12,10 @@ message Activity {
 }
 
 message User {
-	string name = 1;
-	string email = 2;
-	string phone = 3;
+	string id = 1;
+	string name = 2;
+	string email = 3;
+	string phone = 4;
 }
 
 message LogActivityRequest {
@@ -46,7 +47,7 @@ message AddUserRequest {
 }
 
 message AddUserResponse {
-	bool result = 1;
+	string result = 1;
 }
 
 service ActivityService {

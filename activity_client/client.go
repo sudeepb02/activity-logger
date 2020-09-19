@@ -29,6 +29,30 @@ func main() {
 
 	logUserActivity(cli, activityType, activityTimestamp, activityDuration, activityLabel)
 
+	//Create User
+	name := "Sudeep"
+	email := "sudeepbiswas02@gmail.com"
+	phone := "123456789"
+
+	addUser(cli, name, email, phone)
+}
+
+func addUser(cli activitypb.ActivityServiceClient, name string, email string, phone string) {
+	fmt.Println("Adding a new user...")
+
+	req := &activitypb.AddUserRequest {
+		User: &activitypb.User {
+			Name: name,
+			Email: email,
+			Phone: phone,
+		},
+	}
+
+	res, err := cli.AddUser(context.Background(), req)
+	if err != nil {
+		log.Fatalf("Failed to add user %v", err)
+	}
+	fmt.Printf("Response : %v \n", res)
 }
 
 func logUserActivity(cli activitypb.ActivityServiceClient, activityType string, activityTimestamp string, duration string, label string) {
@@ -47,7 +71,7 @@ func logUserActivity(cli activitypb.ActivityServiceClient, activityType string, 
 	if err != nil {
 		log.Fatalf("Failed to log activity %v", err)
 	}
-	fmt.Printf("Response from server : %v", res.Result)
+	fmt.Printf("Response from server : %v \n", res.Result)
 }
 
 func checkActivityStatus(cli activitypb.ActivityServiceClient, activityDetails *activitypb.Activity) {

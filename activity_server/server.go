@@ -33,8 +33,15 @@ type activityItem struct {
 	Label string `bson:"label"`
 }
 
+type userItem struct {
+	ID primitive.ObjectID `bson:"_id,omitempty"`
+	Name string `bson:"name"`
+	Email string `bson:"email"`
+	Phone string `bson:"phone"`
+}
+
 func (*server) LogActivity(ctx context.Context, req *activitypb.LogActivityRequest) (*activitypb.LogActivityResponse, error) {
-	fmt.Printf("Received request to log activity %v", req)
+	fmt.Printf("Received request to log activity %v \n", req)
 	activity := req.GetActivity()
 
 	data := activityItem {
@@ -53,13 +60,11 @@ func (*server) LogActivity(ctx context.Context, req *activitypb.LogActivityReque
 	}
 
 	oid, ok := res.InsertedID.(primitive.ObjectID)
-
 	if !ok {
 		return nil, status.Errorf(
 			codes.Internal,
 			fmt.Sprintf("Internal Error"),
 		)
-
 	}
 
 	return &activitypb.LogActivityResponse{
@@ -75,7 +80,6 @@ func (*server) IsDone(ctx context.Context, req *activitypb.IsDoneRequest) (*acti
 	res := &activitypb.IsDoneResponse {
 		Status: true,
 	}
-
 	return res, nil
 }
 	
@@ -94,12 +98,34 @@ func (*server) IsValid(ctx context.Context, req *activitypb.IsValidRequest) (*ac
 }
 
 func (*server) AddUser(ctx context.Context, req *activitypb.AddUserRequest) (*activitypb.AddUserResponse, error) {
-	fmt.Printf("Request received to add new user %v", req)
-	// userDetails := req.GetUser()
+	fmt.Printf("Request received to add new user %v \n", req)
+	userDetails := req.GetUser()
 
 	//Add user to DB
+	data := userItem{
+		Name: userDetails.GetName(),
+		Email: userDetails.GetEmail(),
+		Phone: userDetails.GetPhone(),
+	}
+
+	res, err := collection.InsertOne(context.Background(), data)
+	if err != nil {
+		return nil, status.Errorf(
+			codes.Internal,
+			fmt.Sprintf("Internal Error %v", err),
+		)
+	}
+
+	oid, ok := res.InsertedID.(primitive.ObjectID)
+	if !ok {
+		return nil, status.Errorf(
+			codes.Internal,
+			fmt.Sprintf("Internal Error"),
+		)
+	}
+
 	return &activitypb.AddUserResponse{
-		Result: true,
+		Result: "User added successfully with ID " + oid.Hex(),
 	}, nil
 }
 
@@ -117,20 +143,7 @@ func main() {
 
 	fmt.Println("Activity Service Started")
 	collection = client.Database("activitydb").Collection("activity")
-
-/////////////////////////////////////////////////
-//Mongo//
-
-	// ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	// defer cancel()
-	// client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
-
-	// defer func() {
-	// 	if err = client.Disconnect(ctx); err != nil {
-	// 		panic(err)
-	// 	}
-	// }()
-////////////////////////////////////////////////////////	
+	
 	fmt.Println("Server started, listening on Port 50051...")
 	lis, err := net.Listen("tcp", "0.0.0.0:50051")
 	if err != nil {
