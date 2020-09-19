@@ -41,8 +41,17 @@ message IsValidResponse {
 	bool result = 1;
 }
 
+message AddUserRequest {
+	User user = 1;
+}
+
+message AddUserResponse {
+	bool result = 1;
+}
+
 service ActivityService {
 	rpc LogActivity(LogActivityRequest) returns (LogActivityResponse) {};
 	rpc IsDone(IsDoneRequest) returns (IsDoneResponse) {};
 	rpc IsValid(IsValidRequest) returns (IsValidResponse) {};
+	rpc AddUser(AddUserRequest) returns (AddUserResponse) {};
 };

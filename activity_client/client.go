@@ -22,10 +22,14 @@ func main() {
 	fmt.Printf("Client connection ready %v", cli)
 
 	//Create a user menu to get input from user and pass the inputs to logUserActivity
-	// logPlayTime(cli)
-}
+	var activityType string = "Play"
+	var activityTimestamp string = "12345"
+	var activityDuration string = "15"
+	var activityLabel string = "PlayTime"
 
-// func logUserActivity(string type, string timestamp, string duration, string label)
+	logUserActivity(cli, activityType, activityTimestamp, activityDuration, activityLabel)
+
+}
 
 func logUserActivity(cli activitypb.ActivityServiceClient, activityType string, activityTimestamp string, duration string, label string) {
 
