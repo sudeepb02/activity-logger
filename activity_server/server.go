@@ -1,23 +1,23 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"log"
 	"net"
-	"fmt"
-	"context"
 	"time"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"	
+	"google.golang.org/grpc/status"
 
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/bson/primitive"	
 
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/sudeepb02/activity-logger/activitypb"	
+	"github.com/sudeepb02/activity-logger/activitypb"
 )
 
 var collection *mongo.Collection
@@ -26,29 +26,32 @@ type server struct {
 }
 
 type activityItem struct {
-	ID primitive.ObjectID `bson:"_id,omitempty"`
-	Type string	`bson:"type"`
-	Timestamp int64 `bson:"timestamp"`
-	Duration int64 `bson:"duration"`
-	Label string `bson:"label"`
+	ID        primitive.ObjectID `bson:"_id,omitempty"`
+	UserID    string             `bson:"user_id"`
+	Type      string             `bson:"type"`
+	Timestamp int64              `bson:"timestamp"`
+	Duration  int64              `bson:"duration"`
+	Label     string             `bson:"label"`
 }
 
 type userItem struct {
-	ID primitive.ObjectID `bson:"_id,omitempty"`
-	Name string `bson:"name"`
-	Email string `bson:"email"`
-	Phone string `bson:"phone"`
+	ID    primitive.ObjectID `bson:"_id,omitempty"`
+	Name  string             `bson:"name"`
+	Email string             `bson:"email"`
+	Phone string             `bson:"phone"`
 }
 
 func (*server) LogActivity(ctx context.Context, req *activitypb.LogActivityRequest) (*activitypb.LogActivityResponse, error) {
-	fmt.Printf("Received request to log activity %v \n", req)
-	activity := req.GetActivity()
 
-	data := activityItem {
-		Type: activity.GetType(),
+	fmt.Printf("Received request to log user activity %v \n", req)
+
+	activity := req.GetActivity()
+	data := activityItem{
+		UserID:    activity.GetUserId(),
+		Type:      activity.GetType(),
 		Timestamp: activity.GetTimestamp(),
-		Duration: activity.GetDuration(),
-		Label: activity.GetLabel(),
+		Duration:  activity.GetDuration(),
+		Label:     activity.GetLabel(),
 	}
 
 	res, err := collection.InsertOne(context.Background(), data)
@@ -66,20 +69,26 @@ func (*server) LogActivity(ctx context.Context, req *activitypb.LogActivityReque
 			fmt.Sprintf("Internal Error"),
 		)
 	}
-
 	return &activitypb.LogActivityResponse{
-		Result: "Activity logged successfully with ID " + oid.Hex(),
+		Activity: &activitypb.Activity{
+			Id:        oid.Hex(),
+			UserId:    activity.GetUserId(),
+			Type:      activity.GetType(),
+			Timestamp: activity.GetTimestamp(),
+			Duration:  activity.GetDuration(),
+			Label:     activity.GetLabel(),
+		},
 	}, nil
 }
 
 func (*server) IsDone(ctx context.Context, req *activitypb.IsDoneRequest) (*activitypb.IsDoneResponse, error) {
-	
+
 	fmt.Printf("Request received at server to check if activity is completed %v", req)
 
 	getActivityReq := &activitypb.GetActivityRequest{
 		Id: req.GetId(),
 	}
-	
+
 	activityRes, err := (*server).GetActivity(&server{}, context.Background(), getActivityReq)
 	if err != nil {
 		log.Fatalf("Error getting activity details %v", err)
@@ -89,37 +98,53 @@ func (*server) IsDone(ctx context.Context, req *activitypb.IsDoneRequest) (*acti
 	currentTimestamp := time.Now().Unix()
 	status := false
 
-	if activityDetails.Timestamp + activityDetails.Duration < currentTimestamp {
+	if activityDetails.Timestamp+activityDetails.Duration < currentTimestamp {
 		status = true
 	}
 
-	res := &activitypb.IsDoneResponse {
+	res := &activitypb.IsDoneResponse{
 		Status: status,
 	}
 	return res, nil
 }
-	
 
 func (*server) IsValid(ctx context.Context, req *activitypb.IsValidRequest) (*activitypb.IsValidResponse, error) {
-	
-	fmt.Printf("Request received at server to check if activity is completed %v", req)
-	// activityDetails := req.GetActivity()
-	//Add logic to check if activity is complete, needs to convert types
 
-	res := &activitypb.IsValidResponse {
-		Result: true,
+	fmt.Printf("Request received at server to check if activity is valid %v", req)
+
+	getActivityReq := &activitypb.GetActivityRequest{
+		Id: req.GetId(),
 	}
 
-	return res, nil
+	activityRes, err := (*server).GetActivity(&server{}, context.Background(), getActivityReq)
+	if err != nil {
+		log.Fatalf("Error getting activity details %v", err)
+	}
+
+	userDetailsReq := &activitypb.GetUserRequest{
+		Id: activityRes.Activity.UserId,
+	}
+
+	_, getUserErr := (*server).GetUser(&server{}, context.Background(), userDetailsReq)
+	if err != nil {
+		return &activitypb.IsValidResponse{
+			Result: false,
+		}, getUserErr
+	}
+
+	return &activitypb.IsValidResponse{
+		Result: true,
+	}, nil
 }
 
 func (*server) AddUser(ctx context.Context, req *activitypb.AddUserRequest) (*activitypb.AddUserResponse, error) {
+
 	fmt.Printf("Request received to add new user %v \n", req)
 	userDetails := req.GetUser()
 
 	//Add user to DB
 	data := userItem{
-		Name: userDetails.GetName(),
+		Name:  userDetails.GetName(),
 		Email: userDetails.GetEmail(),
 		Phone: userDetails.GetPhone(),
 	}
@@ -141,11 +166,17 @@ func (*server) AddUser(ctx context.Context, req *activitypb.AddUserRequest) (*ac
 	}
 
 	return &activitypb.AddUserResponse{
-		Result: "User added successfully with ID " + oid.Hex(),
+		User: &activitypb.User{
+			Id:    oid.Hex(),
+			Name:  userDetails.GetName(),
+			Email: userDetails.GetEmail(),
+			Phone: userDetails.GetPhone(),
+		},
 	}, nil
 }
 
 func (*server) GetUser(ctx context.Context, req *activitypb.GetUserRequest) (*activitypb.GetUserResponse, error) {
+
 	fmt.Printf("Request received to get user details %v \n", req)
 	userID := req.GetId()
 	oid, err := primitive.ObjectIDFromHex(userID)
@@ -157,7 +188,7 @@ func (*server) GetUser(ctx context.Context, req *activitypb.GetUserRequest) (*ac
 	}
 
 	data := &userItem{}
-	filter := bson.M{ "_id": oid }
+	filter := bson.M{"_id": oid}
 
 	res := collection.FindOne(context.Background(), filter)
 	if err := res.Decode(data); err != nil {
@@ -168,9 +199,9 @@ func (*server) GetUser(ctx context.Context, req *activitypb.GetUserRequest) (*ac
 	}
 
 	return &activitypb.GetUserResponse{
-		User: &activitypb.User {
-			Id: data.ID.Hex(),
-			Name: data.Name,
+		User: &activitypb.User{
+			Id:    data.ID.Hex(),
+			Name:  data.Name,
 			Email: data.Email,
 			Phone: data.Phone,
 		},
@@ -191,7 +222,7 @@ func (*server) GetActivity(ctx context.Context, req *activitypb.GetActivityReque
 	}
 
 	data := &activityItem{}
-	filter := bson.M{ "_id": oid }
+	filter := bson.M{"_id": oid}
 
 	res := collection.FindOne(context.Background(), filter)
 	if err := res.Decode(data); err != nil {
@@ -202,18 +233,18 @@ func (*server) GetActivity(ctx context.Context, req *activitypb.GetActivityReque
 	}
 
 	return &activitypb.GetActivityResponse{
-		Activity: &activitypb.Activity {
-			Id: data.ID.Hex(),
-			Type: data.Type,
+		Activity: &activitypb.Activity{
+			Id:        data.ID.Hex(),
+			Type:      data.Type,
 			Timestamp: data.Timestamp,
-			Duration: data.Duration,
-			Label: data.Label,
+			Duration:  data.Duration,
+			Label:     data.Label,
 		},
 	}, nil
 }
 
 func (*server) UpdateActivity(ctx context.Context, req *activitypb.UpdateActivityRequest) (*activitypb.UpdateActivityResponse, error) {
-	
+
 	fmt.Printf("Request received to update activity %v \n", req)
 	activity := req.GetActivity()
 	oid, err := primitive.ObjectIDFromHex(activity.GetId())
@@ -231,8 +262,9 @@ func (*server) UpdateActivity(ctx context.Context, req *activitypb.UpdateActivit
 		return nil, status.Errorf(
 			codes.NotFound,
 			fmt.Sprintf("Cannot find activity %v", err),
-		)		
+		)
 	}
+	data.UserID = activity.GetUserId()
 	data.Type = activity.GetType()
 	data.Timestamp = activity.GetTimestamp()
 	data.Duration = activity.GetDuration()
@@ -247,12 +279,13 @@ func (*server) UpdateActivity(ctx context.Context, req *activitypb.UpdateActivit
 	}
 
 	return &activitypb.UpdateActivityResponse{
-		Activity: &activitypb.Activity {
-			Id: data.ID.Hex(),
-			Type: data.Type,
+		Activity: &activitypb.Activity{
+			Id:        data.ID.Hex(),
+			UserId:    data.UserID,
+			Type:      data.Type,
 			Timestamp: data.Timestamp,
-			Duration: data.Duration,
-			Label: data.Label,
+			Duration:  data.Duration,
+			Label:     data.Label,
 		},
 	}, nil
 }
@@ -271,7 +304,7 @@ func main() {
 
 	fmt.Println("Activity Service Started")
 	collection = client.Database("db").Collection("activity")
-	
+
 	fmt.Println("Server started, listening on Port 50051...")
 	lis, err := net.Listen("tcp", "0.0.0.0:50051")
 	if err != nil {

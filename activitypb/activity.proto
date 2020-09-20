@@ -6,10 +6,11 @@ option go_package="activitypb";
 
 message Activity {
 	string id = 1;			//Unique activity ID
-	string type = 2;		//Activity Type
-	int64 timestamp = 3;	//Timestamp in Unix epoch time
-	int64 duration = 4;		//Duration in seconds
-	string label = 5;		//Activity Label
+	string userId = 2;		//UserID which has logged the activity
+	string type = 3;		//Activity Type
+	int64  timestamp = 4;	//Timestamp in Unix epoch time
+	int64  duration = 5;	//Duration in seconds
+	string label = 6;		//Activity Label
 }	
 
 message User {
@@ -20,15 +21,15 @@ message User {
 }
 
 message LogActivityRequest {
-	Activity activity = 1;
+	Activity activity = 1;		//Accepts Activity struct as input
 }
 
 message LogActivityResponse {
-	string result = 1;
+	Activity activity = 1;		//Returns Activity struct with created activityID
 }
 
 message IsDoneRequest {
-	string id = 1;
+	string id = 1;				//Accepts activityID as input
 }
 
 message IsDoneResponse {
@@ -36,7 +37,7 @@ message IsDoneResponse {
 }
 
 message IsValidRequest {
-	string id = 1;
+	string id = 1;				//Accepts activityID as input
 }
 
 message IsValidResponse {
@@ -44,35 +45,35 @@ message IsValidResponse {
 }
 
 message AddUserRequest {
-	User user = 1;
+	User user = 1;				//Accepts Userstruct as input
 }
 
 message AddUserResponse {
-	string result = 1;
+	User user = 1;				//Returns User struct with created userID
 }
 
 message GetUserRequest {
-	string id = 1;
+	string id = 1;				//Accepts userID 
 }
 
 message GetUserResponse {
-	User user = 1;
+	User user = 1;				//Returns retrieved User details from DB
 }
 
 message GetActivityRequest {
-	string id = 1;
+	string id = 1;				//Accepts activityID
 }
 
 message GetActivityResponse {
-	Activity activity = 1;
+	Activity activity = 1;		//Returns retrieved activity details from DB
 }
 
 message UpdateActivityRequest {
-	Activity activity = 1;
+	Activity activity = 1;		//Accepts activity struct
 }
 
 message UpdateActivityResponse {
-	Activity activity = 1;
+	Activity activity = 1;		//Returns updated activity struct
 }
 
 service ActivityService {
@@ -82,5 +83,5 @@ service ActivityService {
 	rpc GetActivity(GetActivityRequest) returns (GetActivityResponse);
 	rpc UpdateActivity(UpdateActivityRequest) returns (UpdateActivityResponse);
 	rpc IsDone(IsDoneRequest) returns (IsDoneResponse);
-	rpc IsValid(IsValidRequest) returns (IsValidResponse);	
+	rpc IsValid(IsValidRequest) returns (IsValidResponse);
 };
