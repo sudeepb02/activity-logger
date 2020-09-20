@@ -67,6 +67,14 @@ message GetActivityResponse {
 	Activity activity = 1;
 }
 
+message UpdateActivityRequest {
+	Activity activity = 1;
+}
+
+message UpdateActivityResponse {
+	Activity activity = 1;
+}
+
 service ActivityService {
 	rpc LogActivity(LogActivityRequest) returns (LogActivityResponse);
 	rpc IsDone(IsDoneRequest) returns (IsDoneResponse);
@@ -74,4 +82,5 @@ service ActivityService {
 	rpc AddUser(AddUserRequest) returns (AddUserResponse);
 	rpc GetUser(GetUserRequest) returns (GetUserResponse);
 	rpc GetActivity(GetActivityRequest) returns (GetActivityResponse);
+	rpc UpdateActivity(UpdateActivityRequest) returns (UpdateActivityResponse);
 };

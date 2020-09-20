@@ -195,6 +195,51 @@ func (*server) GetActivity(ctx context.Context, req *activitypb.GetActivityReque
 	}, nil
 }
 
+func (*server) UpdateActivity(ctx context.Context, req *activitypb.UpdateActivityRequest) (*activitypb.UpdateActivityResponse, error) {
+	
+	fmt.Printf("Request received to update activity %v \n", req)
+	activity := req.GetActivity()
+	oid, err := primitive.ObjectIDFromHex(activity.GetId())
+	if err != nil {
+		return nil, status.Errorf(
+			codes.InvalidArgument,
+			fmt.Sprintf("Cannot parse ID"),
+		)
+	}
+	data := &activityItem{}
+	filter := bson.M{"_id": oid}
+
+	res := collection.FindOne(context.Background(), filter)
+	if err := res.Decode(data); err != nil {
+		return nil, status.Errorf(
+			codes.NotFound,
+			fmt.Sprintf("Cannot find activity %v", err),
+		)		
+	}
+	data.Type = activity.GetType()
+	data.Timestamp = activity.GetTimestamp()
+	data.Duration = activity.GetDuration()
+	data.Label = activity.GetLabel()
+
+	_, updErr := collection.ReplaceOne(context.Background(), filter, data)
+	if updErr != nil {
+		return nil, status.Errorf(
+			codes.Internal,
+			fmt.Sprintf("Error updating activity %v", updErr),
+		)
+	}
+
+	return &activitypb.UpdateActivityResponse{
+		Activity: &activitypb.Activity {
+			Id: data.ID.Hex(),
+			Type: data.Type,
+			Timestamp: data.Timestamp,
+			Duration: data.Duration,
+			Label: data.Label,
+		},
+	}, nil
+}
+
 func main() {
 
 	fmt.Println("Connecting to MongoDB")

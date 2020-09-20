@@ -22,7 +22,7 @@ func main() {
 
 	//User Menu
 	fmt.Println("Please select an option: ")
-	fmt.Println("1. Log user activity\n2. Add user\n3. Get User\n4. Get Activity")
+	fmt.Println("1. Log user activity\n2. Add user\n3. Get User\n4. Get Activity\n5. Update activity")
 
 	var i int
 	fmt.Scanf("%d", &i)
@@ -37,9 +37,49 @@ func main() {
 		getUser(cli)
 	case 4 : 
 		getActivity(cli)
+	case 5 :
+		updateActivity(cli)
 	default :
 		fmt.Println("Please select a correct option")		
 	}	
+}
+
+func updateActivity(cli activitypb.ActivityServiceClient) {
+
+	var id, activityType, activityTimestamp, activityDuration, activityLabel string
+
+	fmt.Println("Enter activity ID:")
+	fmt.Scanln(&id)
+
+	fmt.Println("Enter activity type:")
+	fmt.Scanln(&activityType)
+
+	fmt.Println("Enter the timestamp:")
+	fmt.Scanln(&activityTimestamp)
+
+	fmt.Println("Enter duration of the activity")
+	fmt.Scanln(&activityDuration)
+
+	fmt.Println("Enter label for the activity:")
+	fmt.Scanln(&activityLabel)
+
+	fmt.Println("Updating User activity...")
+	req := &activitypb.UpdateActivityRequest{
+		Activity: &activitypb.Activity{
+			Id: id,
+			Type: activityType,
+			Timestamp: activityTimestamp,
+			Duration: activityDuration,
+			Label: activityLabel,
+		},
+	}
+
+	res, err := cli.UpdateActivity(context.Background(), req)
+	if err != nil {
+		log.Fatalf("Failed to update activity %v", err)
+	}
+	fmt.Printf("Activity updated successfully: %v \n", res.Activity)	
+
 }
 
 func getUser(cli activitypb.ActivityServiceClient) {
