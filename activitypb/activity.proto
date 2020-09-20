@@ -5,10 +5,11 @@ package activity;
 option go_package="activitypb";
 
 message Activity {
-	string type = 1;
-	string timestamp = 2;
-	string duration = 3;
-	string label = 4;
+	string id = 1;
+	string type = 2;
+	string timestamp = 3;
+	string duration = 4;
+	string label = 5;
 }
 
 message User {
@@ -50,9 +51,27 @@ message AddUserResponse {
 	string result = 1;
 }
 
+message GetUserRequest {
+	string id = 1;
+}
+
+message GetUserResponse {
+	User user = 1;
+}
+
+message GetActivityRequest {
+	string id = 1;
+}
+
+message GetActivityResponse {
+	Activity activity = 1;
+}
+
 service ActivityService {
-	rpc LogActivity(LogActivityRequest) returns (LogActivityResponse) {};
-	rpc IsDone(IsDoneRequest) returns (IsDoneResponse) {};
-	rpc IsValid(IsValidRequest) returns (IsValidResponse) {};
-	rpc AddUser(AddUserRequest) returns (AddUserResponse) {};
+	rpc LogActivity(LogActivityRequest) returns (LogActivityResponse);
+	rpc IsDone(IsDoneRequest) returns (IsDoneResponse);
+	rpc IsValid(IsValidRequest) returns (IsValidResponse);
+	rpc AddUser(AddUserRequest) returns (AddUserResponse);
+	rpc GetUser(GetUserRequest) returns (GetUserResponse);
+	rpc GetActivity(GetActivityRequest) returns (GetActivityResponse);
 };

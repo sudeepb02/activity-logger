@@ -18,27 +18,78 @@ func main() {
 	defer cc.Close()
 
 	cli := activitypb.NewActivityServiceClient(cc)
-
 	fmt.Printf("Client connection ready %v", cli)
 
-	//Create a user menu to get input from user and pass the inputs to logUserActivity
-	var activityType string = "Play"
-	var activityTimestamp string = "12345"
-	var activityDuration string = "15"
-	var activityLabel string = "PlayTime"
+	//User Menu
+	fmt.Println("Please select an option: ")
+	fmt.Println("1. Log user activity\n2. Add user\n3. Get User\n4. Get Activity")
 
-	logUserActivity(cli, activityType, activityTimestamp, activityDuration, activityLabel)
+	var i int
+	fmt.Scanf("%d", &i)
+	fmt.Printf("Option selected by user: %d\n", i)	
 
-	//Create User
-	name := "Sudeep"
-	email := "sudeepbiswas02@gmail.com"
-	phone := "123456789"
-
-	addUser(cli, name, email, phone)
+	switch i {
+	case 1 :
+		logUserActivity(cli)
+	case 2 : 
+		addUser(cli)
+	case 3 :
+		getUser(cli)
+	case 4 : 
+		getActivity(cli)
+	default :
+		fmt.Println("Please select a correct option")		
+	}	
 }
 
-func addUser(cli activitypb.ActivityServiceClient, name string, email string, phone string) {
-	fmt.Println("Adding a new user...")
+func getUser(cli activitypb.ActivityServiceClient) {
+	
+	var userID string
+	fmt.Print("Enter user ID to get user details: ")
+	fmt.Scanln(&userID)
+
+	req := &activitypb.GetUserRequest {
+		Id: userID,
+	}
+
+	fmt.Println("Getting user details...")
+	res, err := cli.GetUser(context.Background(), req)
+	if err != nil {
+		log.Fatalf("Failed to get user details %v", err)
+	}
+	fmt.Printf("Response : %v \n", res.User)
+}
+
+func getActivity(cli activitypb.ActivityServiceClient) {
+	
+	var activityID string
+	fmt.Print("Enter activity ID to get details: ")
+	fmt.Scanln(&activityID)
+
+	req := &activitypb.GetActivityRequest {
+		Id: activityID,
+	}
+
+	fmt.Println("Getting activity details...")
+	res, err := cli.GetActivity(context.Background(), req)
+	if err != nil {
+		log.Fatalf("Failed to get user details %v", err)
+	}
+	fmt.Printf("Response : %v \n", res.Activity)
+}
+
+func addUser(cli activitypb.ActivityServiceClient) {
+
+	var name, email, phone string
+
+	fmt.Print("Enter name of the User: ")
+	fmt.Scanln(&name)
+
+	fmt.Print("Enter email address: ")
+	fmt.Scanln(&email)
+
+	fmt.Print("Enter Phone number: ")
+	fmt.Scanln(&phone)
 
 	req := &activitypb.AddUserRequest {
 		User: &activitypb.User {
@@ -48,22 +99,36 @@ func addUser(cli activitypb.ActivityServiceClient, name string, email string, ph
 		},
 	}
 
+	fmt.Println("Adding a new user...")	
 	res, err := cli.AddUser(context.Background(), req)
 	if err != nil {
 		log.Fatalf("Failed to add user %v", err)
 	}
-	fmt.Printf("Response : %v \n", res)
+	fmt.Printf("Response : %v \n", res.Result)
 }
 
-func logUserActivity(cli activitypb.ActivityServiceClient, activityType string, activityTimestamp string, duration string, label string) {
+func logUserActivity(cli activitypb.ActivityServiceClient) {
+
+	var activityType, activityTimestamp, activityDuration, activityLabel string
+	fmt.Println("Enter activity type:")
+	fmt.Scanln(&activityType)
+
+	fmt.Println("Enter the timestamp:")
+	fmt.Scanln(&activityTimestamp)
+
+	fmt.Println("Enter duration of the activity")
+	fmt.Scanln(&activityDuration)
+
+	fmt.Println("Enter label for the activity:")
+	fmt.Scanln(&activityLabel)
 
 	fmt.Println("Logging User activity...")
 	req := &activitypb.LogActivityRequest{
 		Activity: &activitypb.Activity{
 			Type: activityType,
 			Timestamp: activityTimestamp,
-			Duration: duration,
-			Label: label,
+			Duration: activityDuration,
+			Label: activityLabel,
 		},
 	}
 

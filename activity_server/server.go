@@ -1,28 +1,27 @@
 package main
 
 import (
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 	"log"
 	"net"
 	"fmt"
 	"context"
-	// "time"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"	
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/bson/primitive"	
 
-	"github.com/sudeepb02/activity-logger/activitypb"	
+	"gopkg.in/mgo.v2/bson"
 
+	"github.com/sudeepb02/activity-logger/activitypb"	
 )
 
 var collection *mongo.Collection
 
 type server struct {
-
 }
 
 type activityItem struct {
@@ -129,6 +128,73 @@ func (*server) AddUser(ctx context.Context, req *activitypb.AddUserRequest) (*ac
 	}, nil
 }
 
+func (*server) GetUser(ctx context.Context, req *activitypb.GetUserRequest) (*activitypb.GetUserResponse, error) {
+	fmt.Printf("Request received to get user details %v \n", req)
+	userID := req.GetId()
+	oid, err := primitive.ObjectIDFromHex(userID)
+	if err != nil {
+		return nil, status.Errorf(
+			codes.Internal,
+			fmt.Sprintf("Internal Error %v", err),
+		)
+	}
+
+	data := &userItem{}
+	filter := bson.M{ "_id": oid }
+
+	res := collection.FindOne(context.Background(), filter)
+	if err := res.Decode(data); err != nil {
+		return nil, status.Errorf(
+			codes.NotFound,
+			fmt.Sprintf("Cannot find user %v", err),
+		)
+	}
+
+	return &activitypb.GetUserResponse{
+		User: &activitypb.User {
+			Id: data.ID.Hex(),
+			Name: data.Name,
+			Email: data.Email,
+			Phone: data.Phone,
+		},
+	}, nil
+}
+
+func (*server) GetActivity(ctx context.Context, req *activitypb.GetActivityRequest) (*activitypb.GetActivityResponse, error) {
+
+	fmt.Printf("Request received to get activity %v \n", req)
+
+	activityID := req.GetId()
+	oid, err := primitive.ObjectIDFromHex(activityID)
+	if err != nil {
+		return nil, status.Errorf(
+			codes.Internal,
+			fmt.Sprintf("Internal Error %v", err),
+		)
+	}
+
+	data := &activityItem{}
+	filter := bson.M{ "_id": oid }
+
+	res := collection.FindOne(context.Background(), filter)
+	if err := res.Decode(data); err != nil {
+		return nil, status.Errorf(
+			codes.NotFound,
+			fmt.Sprintf("Cannot find activity %v", err),
+		)
+	}
+
+	return &activitypb.GetActivityResponse{
+		Activity: &activitypb.Activity {
+			Id: data.ID.Hex(),
+			Type: data.Type,
+			Timestamp: data.Timestamp,
+			Duration: data.Duration,
+			Label: data.Label,
+		},
+	}, nil
+}
+
 func main() {
 
 	fmt.Println("Connecting to MongoDB")
@@ -142,7 +208,7 @@ func main() {
 	}
 
 	fmt.Println("Activity Service Started")
-	collection = client.Database("activitydb").Collection("activity")
+	collection = client.Database("db").Collection("activity")
 	
 	fmt.Println("Server started, listening on Port 50051...")
 	lis, err := net.Listen("tcp", "0.0.0.0:50051")
