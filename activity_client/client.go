@@ -22,7 +22,7 @@ func main() {
 
 	//User Menu
 	fmt.Println("Please select an option: ")
-	fmt.Println("1. Log user activity\n2. Add user\n3. Get User\n4. Get Activity\n5. Update activity")
+	fmt.Println("1. Log user activity\n2. Add user\n3. Get User\n4. Get Activity\n5. Update activity\n6. Check activity status\n7. Check activity validity")
 
 	var i int
 	fmt.Scanf("%d", &i)
@@ -39,6 +39,10 @@ func main() {
 		getActivity(cli)
 	case 5 :
 		updateActivity(cli)
+	case 6 :
+		checkActivityStatus(cli)
+	case 7 :
+		checkActivityValidity(cli)
 	default :
 		fmt.Println("Please select a correct option")		
 	}	
@@ -46,7 +50,8 @@ func main() {
 
 func updateActivity(cli activitypb.ActivityServiceClient) {
 
-	var id, activityType, activityTimestamp, activityDuration, activityLabel string
+	var id, activityType, activityLabel string
+	var activityTimestamp, activityDuration int64
 
 	fmt.Println("Enter activity ID:")
 	fmt.Scanln(&id)
@@ -149,7 +154,9 @@ func addUser(cli activitypb.ActivityServiceClient) {
 
 func logUserActivity(cli activitypb.ActivityServiceClient) {
 
-	var activityType, activityTimestamp, activityDuration, activityLabel string
+	var activityType, activityLabel string
+	var activityTimestamp, activityDuration int64
+
 	fmt.Println("Enter activity type:")
 	fmt.Scanln(&activityType)
 
@@ -179,11 +186,16 @@ func logUserActivity(cli activitypb.ActivityServiceClient) {
 	fmt.Printf("Response from server : %v \n", res.Result)
 }
 
-func checkActivityStatus(cli activitypb.ActivityServiceClient, activityDetails *activitypb.Activity) {
+func checkActivityStatus(cli activitypb.ActivityServiceClient) {
 	
-	fmt.Println("Checking activity status...")
+	// fmt.Println("Checking activity status...")
+	var activityID string
+
+	fmt.Println("Please enter activity ID: ")
+	fmt.Scanln(&activityID)
+
 	req := &activitypb.IsDoneRequest{
-		Activity : activityDetails,
+		Id : activityID,
 	}
 
 	res, err := cli.IsDone(context.Background(), req)
@@ -197,11 +209,15 @@ func checkActivityStatus(cli activitypb.ActivityServiceClient, activityDetails *
 	}
 }
 
-func checkActivityValidity(cli activitypb.ActivityServiceClient, activityDetails *activitypb.Activity) {
+func checkActivityValidity(cli activitypb.ActivityServiceClient) {
 	
-	fmt.Println("Checking if the activity is valid...")
+	var activityID string
+
+	fmt.Println("Please enter activity ID: ")
+	fmt.Scanln(&activityID)
+
 	req := &activitypb.IsValidRequest{
-		Activity : activityDetails,
+		Id : activityID,
 	}
 
 	res, err := cli.IsValid(context.Background(), req)

@@ -5,6 +5,7 @@ import (
 	"net"
 	"fmt"
 	"context"
+	"time"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -27,8 +28,8 @@ type server struct {
 type activityItem struct {
 	ID primitive.ObjectID `bson:"_id,omitempty"`
 	Type string	`bson:"type"`
-	Timestamp string `bson:"timestamp"`
-	Duration string `bson:"duration"`
+	Timestamp int64 `bson:"timestamp"`
+	Duration int64 `bson:"duration"`
 	Label string `bson:"label"`
 }
 
@@ -72,12 +73,28 @@ func (*server) LogActivity(ctx context.Context, req *activitypb.LogActivityReque
 }
 
 func (*server) IsDone(ctx context.Context, req *activitypb.IsDoneRequest) (*activitypb.IsDoneResponse, error) {
+	
 	fmt.Printf("Request received at server to check if activity is completed %v", req)
-	// activityDetails := req.GetActivity()
-	//Add logic to check if activity is complete, needs to convert types
+
+	getActivityReq := &activitypb.GetActivityRequest{
+		Id: req.GetId(),
+	}
+	
+	activityRes, err := (*server).GetActivity(&server{}, context.Background(), getActivityReq)
+	if err != nil {
+		log.Fatalf("Error getting activity details %v", err)
+	}
+
+	activityDetails := activityRes.Activity
+	currentTimestamp := time.Now().Unix()
+	status := false
+
+	if activityDetails.Timestamp + activityDetails.Duration < currentTimestamp {
+		status = true
+	}
 
 	res := &activitypb.IsDoneResponse {
-		Status: true,
+		Status: status,
 	}
 	return res, nil
 }
